@@ -32,7 +32,7 @@ AudioClass::AudioClass(QObject *parent)
     qDebug() << "Preferred codec:" << custom_input_device.preferredFormat().codec();
     qDebug() << "Preferred sample size:" << custom_input_device.preferredFormat().sampleSize();
 
-    m_format.setSampleRate(16000);
+    m_format.setSampleRate(8000);
     m_format.setChannelCount(1);
     m_format.setSampleSize(custom_input_device.preferredFormat().sampleSize());
     m_format.setSampleType(QAudioFormat::SignedInt);
