@@ -10,8 +10,8 @@ import Audio 1.0
 
 ApplicationWindow {
     visible: true
-    width: 128*2
-    height: 128
+    width: 800
+    height: 480
     title: qsTr("VU Meter")
 
     // This will prevent the window from expansion
