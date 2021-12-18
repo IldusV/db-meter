@@ -39,4 +39,4 @@ HEADERS += \
     audio.h
 
 # This need to allow build the project as elf32 not as a shared oobject
-QMAKE_LFLAGS += -no-pie
+#QMAKE_LFLAGS += -no-pie

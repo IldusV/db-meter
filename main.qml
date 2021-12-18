@@ -13,7 +13,7 @@ ApplicationWindow {
     width: 800
     height: 480
     title: qsTr("VU Meter")
-
+visibility: "FullScreen"
     // This will prevent the window from expansion
     maximumHeight: height
     maximumWidth: width
@@ -22,132 +22,108 @@ ApplicationWindow {
 
     SwipeView {
         id: swipeView
+        anchors.rightMargin: 0
+        anchors.bottomMargin: 0
+        anchors.leftMargin: 0
+        anchors.topMargin: 0
         anchors.fill: parent
         currentIndex: tabBar.currentIndex
 
-        Page1Form {
 
-        }
 
-        Page2Form {
-            AudioClass {
-                id: audioclass
+            Page {
+
+
+                width: 800
+                height: 400
+
+                AudioClass {
+                    id: audioclass
+                }
+                Rectangle {
+                    id: rectangle
+                    color: "slategray"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.fill: parent
+                    border.width: 1
+                }
+                Meter{
+                    //                    width: 500
+                    //                    height: 340
+                    x:-50
+                    y:20
+
+                    Text {
+                        id: element
+                        x: 221
+                        y: 170
+                        color: "#eeeeec"
+                        text: qsTr("TRIM LEFT")
+                        font.pixelSize: 14
+                    }
+                    //                anchors.rightMargin: 800;
+                    //                anchors.bottomMargin: 200
+                }
+                Meter{
+                    //                    width: 500
+                    //                    height: 340
+                    x:350
+                    y:20
+
+                    Text {
+                        id: element1
+                        x: 218
+                        y: 170
+                        color: "#eeeeec"
+                        text: qsTr("TRIM RIGHT")
+                        font.pixelSize: 14
+                    }
+                }
+
+                Label {
+                    text: qsTr("You are on Page 2.")
+                    anchors.centerIn: parent
+                }
+
+                Dial {
+                    id: dial
+                    x: 134
+                    y: 208
+                    width: 133
+                    height: 102
+                    maximumValue: 5
+                    stepSize: 1
+                }
+                Dial {
+                    id: dial1
+                    x: 534
+                    y: 208
+                    width: 133
+                    height: 102
+                    stepSize: 1
+                    tickmarksVisible: true
+                    maximumValue: 5
+                }
             }
 
-//            menuBar: MenuBar {
-//                visible: true
-//            }
 
-            header: ToolBar {
-                visible: false
+
+        Page {
+            width: 600
+            height: 400
+
+
+            header: Label {
+                text: qsTr("Page 1")
+                font.pixelSize: Qt.application.font.pixelSize * 2
+                padding: 10
             }
 
-            CircularGauge {
-                id: circularGauge
-                objectName: "circularGauge_x"
-                x: 0
-                y: 0
-                width: 0
-                height: 0
-                visible: true
-                clip: false
-                anchors.rightMargin: 0
-                anchors.bottomMargin: -129
-                anchors.leftMargin: 0
-                anchors.topMargin: 0
-
-                maximumValue: 60
-                minimumValue: 0
-
-        //        property bool accelerating
-
-                //onSomethingHappened: needle_value = db_value
-
-                value: audioclass.lvl * (maximumValue*5)
-        //        value: accelerating ? maximumValue : 0
-        //       //maximumValue: 250
-                anchors {
-                    fill: parent
-                    margins: window.height * 0.2
-                }
-
-                StatusIndicator
-                {
-                    id: statusIndicator
-                    x: 219
-                    y: 50
-                    width: 19
-                    height: 16
-                    color: "#cc0000"
-                    active: circularGauge.value >= 40 ? true : false
-                    opacity: 1
-                    visible: true
-                }
-
-                Behavior on value
-                {
-                    NumberAnimation { duration: 200}
-                }
-
-                style: CircularGaugeStyle
-                {
-                    minimumValueAngle: -45
-                    maximumValueAngle: 45
-
-                    foreground:
-                        Item {
-                        }
-
-                    background:
-                        Image {
-                        id: scale_custom
-                        source: "img/TEAK_UV_meterX.svg"
-                        fillMode: Image.PreserveAspectFit
-                        verticalAlignment: Image.AlignTop
-                        visible: true
-                    }
-
-                    tickmarkLabel:
-                        Text {
-                        font.pixelSize: Math.max(6, outerRadius * 0.1)
-                        font.bold: false
-                        font.italic: false
-                        text: styleData.index
-                        color: "black" //styleData.value >= 80 ? "#e34c22" : "#e5e5e5"
-                        antialiasing: false
-                        visible: false
-                    }
-
-                    tickmark: Rectangle {
-                        id: tickm1
-                        visible: false
-                        implicitWidth: outerRadius * 0.015
-                        antialiasing: true
-                        implicitHeight: outerRadius * 0.1
-                        color: styleData.value >= 40 ? "#e34c22" : "#black"
-                    }
-
-                    minorTickmark: Rectangle {
-                        //visible: true
-                        x: 0
-                        y: 6
-                        visible: false//styleData.value < 40
-                        implicitWidth: outerRadius * 0.01
-                        antialiasing: true
-                        implicitHeight: outerRadius * 0.05
-                        color: "black"
-                    }
-
-                    needle: Rectangle {
-                        y: -8
-                        x: 0
-                        height: outerRadius * 0.8
-                        width: 2
-                        color: "dimgray"
-                        radius: 0
-                    }
-                }
+            Label {
+                text: qsTr("You are on Page 1.")
+                anchors.centerIn: parent
             }
         }
+
     }
 }
