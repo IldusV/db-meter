@@ -13,7 +13,8 @@ ApplicationWindow {
     width: 800
     height: 480
     title: qsTr("VU Meter")
-visibility: "FullScreen"
+    visibility: "FullScreen"
+
     // This will prevent the window from expansion
     maximumHeight: height
     maximumWidth: width
@@ -29,129 +30,175 @@ visibility: "FullScreen"
         anchors.fill: parent
         currentIndex: tabBar.currentIndex
 
+        Page {
+            width: 800
+            height: 400
 
+            AudioClass {
+                id: audioclass
+            }
 
-            Page {
+            Rectangle {
+                id: rectangle
+                color: "slategray"
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.fill: parent
+                border.width: 10
+                border.color: "darkgrey"
+            }
 
+            Item {
+                id: meterGroup1
 
-                width: 800
-                height: 400
-
-                AudioClass {
-                    id: audioclass
+                Meter {
+                    x: -50
+                    y: 20
                 }
+
+                Text {
+                    id: element
+                    x: 167
+                    y: 192
+                    color: "#eeeeec"
+                    text: qsTr("TRIM LEFT")
+                    font.pixelSize: 14
+                }
+
                 Rectangle {
-                    id: rectangle
-                    color: "slategray"
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.fill: parent
-                    border.width: 1
+                    id: rectangle1
+                    x: 28
+                    y: 318
+                    width: 344
+                    height: 140
+                    color: "#555753"
+                    radius: 10
+
+                    Switch {
+                        id: element3
+                        x: 8
+                        y: 43
+                        text: qsTr("Switch")
+                    }
+                    anchors.bottomMargin: 200
                 }
-                Meter{
-                    //                    width: 500
-                    //                    height: 340
-                    x:-50
-                    y:20
+
+                Switch {
+                    id: element2
+                    x: 22
+                    y: 248
+                    font.pixelSize: 14
 
                     Text {
-                        id: element
-                        x: 221
-                        y: 170
-                        color: "#eeeeec"
-                        text: qsTr("TRIM LEFT")
-                        font.pixelSize: 14
+                        id: element2Text
+                        x: 10
+                        y: 42
+                        text: qsTr("ON/OFF")
+                        color: "white"
                     }
-
-                    Rectangle {
-                        id: rectangle1
-                        x: 80
-                        y: 301
-                        width: 344
-                        height: 140
-                        color: "#555753"
-                        radius: 10
-
-                        Switch {
-                            id: element2
-                            x: 26
-                            y: 22
-                            text: qsTr("Switch")
-                        }
-
-                        Switch {
-                            id: element3
-                            x: 26
-                            y: 74
-                            text: qsTr("Switch")
-                        }
-
-                        StatusIndicator {
-                            id: statusIndicator
-                            x: 0
-                            y: -111
-                        }
-                    }
-                    //                anchors.rightMargin: 800;
-                    //                anchors.bottomMargin: 200
                 }
-                Meter{
-                    //                    width: 500
-                    //                    height: 340
-                    x:350
-                    y:20
+
+                StatusIndicator {
+                    id: statusIndicator
+                    x: 28
+                    y: 208
+                    active: element2.checked ? true : false
+                    color: "green"
 
                     Text {
-                        id: element1
-                        x: 218
-                        y: 170
-                        color: "#eeeeec"
-                        text: qsTr("TRIM RIGHT")
-                        font.pixelSize: 14
-                    }
-
-                    Rectangle {
-                        id: rectangle2
-                        x: 86
-                        y: 301
-                        width: 340
-                        height: 142
-                        color: "#555753"
-                        radius: 10
-
-                        Switch {
-                            id: element4
-                            x: 32
-                            y: 19
-                            text: qsTr("Switch")
-                        }
-
-                        Switch {
-                            id: element5
-                            x: 32
-                            y: 72
-                            text: qsTr("Switch")
-                        }
-                    }
-
-                    StatusIndicator {
-                        id: statusIndicator1
-                        x: 86
-                        y: 191
+                        id: textL
+                        x: 45
+                        y: 4
+                        text: qsTr("L")
+                        color: "white"
+                        font.pixelSize: 22
                     }
                 }
 
                 Dial {
-                    id: dial
+                    id: dial1
                     x: 134
                     y: 208
                     width: 133
                     height: 102
-                    maximumValue: 5
                     stepSize: 1
+                    tickmarksVisible: true
+                    maximumValue: 5
+
                 }
+            }
+
+            //***********************************************************
+
+            Item {
+                id: meterGroup2
+
+                Meter {
+                    x: 332
+                    y: 21
+                }
+
+                Text {
+                    id: elementTextTrimLeft
+                    x: 544
+                    y: 193
+                    color: "#eeeeec"
+                    text: qsTr("TRIM RIGHT")
+                    font.pixelSize: 14
+                }
+
+                Rectangle {
+                    id: rectangle2
+                    x: 413
+                    y: 321
+                    width: 344
+                    height: 140
+                    color: "#555753"
+                    radius: 10
+
+                    Switch {
+                        id: element5
+                        x: 8
+                        y: 43
+                        text: qsTr("Switch")
+                    }
+                    anchors.bottomMargin: 200
+                }
+
+                Switch {
+                    id: switchOnOffRight
+                    x: 413
+                    y: 257
+                    font.pixelSize: 14
+
+                    Text {
+                        id: elementTextOnOff
+                        x: 10
+                        y: 42
+                        text: qsTr("ON/OFF")
+                        color: "white"
+                    }
+                }
+
+                StatusIndicator {
+                    id: statusIndicatorRight
+                    x: 413
+                    y: 208
+                    active: switchOnOffRight.checked ? true : false
+                    color: "green"
+
+                    Text {
+                        id: textR
+                        x: 45
+                        y: 4
+                        text: qsTr("R")
+                        color: "white"
+                        font.pixelSize: 22
+                    }
+                }
+
                 Dial {
-                    id: dial1
-                    x: 534
+                    id: dial2
+                    x: 516
                     y: 208
                     width: 133
                     height: 102
@@ -159,7 +206,10 @@ visibility: "FullScreen"
                     tickmarksVisible: true
                     maximumValue: 5
                 }
+
             }
+
+        }
 
 
 
