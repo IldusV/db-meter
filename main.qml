@@ -13,7 +13,7 @@ ApplicationWindow {
     width: 800
     height: 480
     title: qsTr("VU Meter")
-    visibility: "FullScreen"
+//    visibility: "FullScreen"
 
     // This will prevent the window from expansion
     maximumHeight: height
@@ -58,7 +58,7 @@ ApplicationWindow {
                 Text {
                     id: element
                     x: 167
-                    y: 192
+                    y: 196
                     color: "#eeeeec"
                     text: qsTr("TRIM LEFT")
                     font.pixelSize: 14
@@ -125,6 +125,18 @@ ApplicationWindow {
                     maximumValue: 5
 
                 }
+
+                Rectangle {
+                    id: rectangle3
+                    x: 23
+                    y: 14
+                    width: 355
+                    height: 180
+                    color: "#00000000"
+                    radius: 20
+                    border.color: "darkgrey"
+                    border.width: 10
+                }
             }
 
             //***********************************************************
@@ -140,7 +152,7 @@ ApplicationWindow {
                 Text {
                     id: elementTextTrimLeft
                     x: 544
-                    y: 193
+                    y: 196
                     color: "#eeeeec"
                     text: qsTr("TRIM RIGHT")
                     font.pixelSize: 14
@@ -205,6 +217,18 @@ ApplicationWindow {
                     stepSize: 1
                     tickmarksVisible: true
                     maximumValue: 5
+                }
+                Rectangle {
+                    id: rectangle4
+                    x: 405
+                    y: 15
+                    width: 355
+                    height: 180
+                    color: "#00000000"
+                    radius: 20
+                    border.color: "darkgrey"
+                    border.width: 10
+
                 }
 
             }
