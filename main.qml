@@ -13,7 +13,7 @@ ApplicationWindow {
     width: 800
     height: 480
     title: qsTr("VU Meter")
-//    visibility: "FullScreen"
+    //    visibility: "FullScreen"
 
     // This will prevent the window from expansion
     maximumHeight: height
@@ -38,6 +38,7 @@ ApplicationWindow {
                 id: audioclass
             }
 
+
             Rectangle {
                 id: rectangle
                 color: "slategray"
@@ -53,6 +54,8 @@ ApplicationWindow {
                 Meter {
                     x: -50
                     y: 20
+                    width: 496
+                    height: 339
                 }
 
                 Text {
@@ -61,25 +64,7 @@ ApplicationWindow {
                     y: 196
                     color: "#eeeeec"
                     text: qsTr("TRIM LEFT")
-                    font.pixelSize: 14
-                }
-
-                Rectangle {
-                    id: rectangle1
-                    x: 28
-                    y: 318
-                    width: 344
-                    height: 140
-                    color: "#555753"
-                    radius: 10
-
-                    Switch {
-                        id: element3
-                        x: 8
-                        y: 43
-                        text: qsTr("Switch")
-                    }
-                    anchors.bottomMargin: 200
+                    font.pixelSize: 16
                 }
 
                 Switch {
@@ -155,25 +140,7 @@ ApplicationWindow {
                     y: 196
                     color: "#eeeeec"
                     text: qsTr("TRIM RIGHT")
-                    font.pixelSize: 14
-                }
-
-                Rectangle {
-                    id: rectangle2
-                    x: 413
-                    y: 321
-                    width: 344
-                    height: 140
-                    color: "#555753"
-                    radius: 10
-
-                    Switch {
-                        id: element5
-                        x: 8
-                        y: 43
-                        text: qsTr("Switch")
-                    }
-                    anchors.bottomMargin: 200
+                    font.pixelSize: 16
                 }
 
                 Switch {
@@ -233,9 +200,231 @@ ApplicationWindow {
 
             }
 
+            RowLayout {
+                x: 28
+                y: 323
+                width: 735
+                height: 140
+
+                Rectangle {
+                    id: rectangleFilters
+                    x: 28
+                    y: 323
+                    width: 239
+                    height: 140
+                    color: "#3b5066"
+                    radius: 10
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                    border.width: 0
+                    anchors.bottomMargin: 200
+
+                    Text {
+                        text: "FILTERS"
+                        color: "white"
+                        font.pixelSize: 18
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+
+                    Dial {
+                        id: dialLPF
+                        x: 31
+                        y: 50
+                        width: 70
+                        height: 70
+                        //Layout.minimumWidth: 30
+                        //Layout.preferredWidth: 70
+
+                        Text {
+                            id: textLPF
+                            y: -21
+                            text: qsTr("LPF")
+                            color: "white"
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        }
+
+                        Text {
+                            id: text19
+                            y: 71
+                            text: qsTr("19")
+                            color: "white"
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        }
+                    }
+
+                    Dial {
+                        id: dialHPF
+                        x: 143
+                        y: 50
+                        width: 70
+                        height: 70
+
+                        Text {
+                            id: textHPF
+                            y: -19
+
+                            text: qsTr("HPF")
+                            color: "white"
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        }
+
+                        Text {
+                            id: text20000
+                            y: 71
+                            text: qsTr("20000")
+                            color: "white"
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        }
+                    }
+                }
+
+                Rectangle {
+                    id: rectangleDynEq
+                    x: 273
+                    y: 323
+                    width: 239
+                    height: 140
+                    color: "#3b5066"
+                    radius: 10
+                    border.width: 0
+                    anchors.bottomMargin: 200
+
+                    Text {
+                        id: textrectangleDynEq
+                        text: qsTr("DYN EQ")
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        font.pixelSize: 18
+                        color: "white"
+                    }
+
+                    Dial {
+                        x: 31
+                        y: 50
+                        height: 70
+                        width: 70
+
+                        Text {
+                            id: textFreqq
+                            y: -18
+
+                            text: qsTr("FREQ")
+                            color: "white"
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        }
+
+                        Text {
+                            id: text2736
+                            y: 71
+                            text: qsTr("2736")
+                            color: "white"
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        }
+
+                    }
+
+                    Dial {
+                        x: 143
+                        y: 50
+                        height: 70
+                        width: 70
+
+                        Text {
+                            id: textDepth
+                            y: -18
+
+                            text: qsTr("DEPTH")
+                            color: "white"
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        }
+
+                        Text {
+                            id: text100
+                            y: 71
+                            text: qsTr("100")
+                            color: "white"
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        }
+
+                    }
+
+
+                }
+
+                Rectangle {
+                    id: rectangleMonoMaker
+                    x: 527
+                    y: 323
+                    width: 239
+                    height: 140
+                    color: "#3b5066"
+                    radius: 10
+                    border.width: 0
+                    anchors.bottomMargin: 200
+
+                    Text {
+                        id: textMonoMaker
+                        text: qsTr("MONO MAKER")
+                        color: "white"
+                        font.pixelSize: 18
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+
+                    Dial {
+                        x: 31
+                        y: 50
+                        height: 70
+                        width: 70
+
+                        Text {
+                            id: textFreq
+                            y: -18
+
+                            text: qsTr("FREQ")
+                            color: "white"
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        }
+
+                        Text {
+                            id: text80
+                            y: 71
+                            text: qsTr("80")
+                            color: "white"
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        }
+                    }
+
+                    Dial {
+                        x: 143
+                        y: 50
+                        height: 70
+                        width: 70
+
+                        Text {
+                            id: textAmount
+                            y: -18
+
+                            text: qsTr("AMOUNT")
+                            anchors.horizontalCenterOffset: 0
+                            color: "white"
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        }
+
+                        Text {
+                            id: text1001
+                            y: 71
+                            text: qsTr("100")
+                            anchors.horizontalCenterOffset: 0
+                            color: "white"
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        }
+
+                    }
+
+                }
+            }
         }
 
-
+        //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
         Page {
             width: 600

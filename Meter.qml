@@ -36,9 +36,8 @@ import Audio 1.0
 
         //onSomethingHappened: needle_value = db_value
 
-        value: audioclass.lvl * (maximumValue*5)
-//        value: accelerating ? maximumValue : 0
-//       //maximumValue: 250
+        value: audioclass.lvl * (maximumValue*10)
+
         anchors {
             //fill: parent
 //                    margins: window.height * 0.2
