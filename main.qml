@@ -210,7 +210,7 @@ ApplicationWindow {
                     id: rectangleFilters
                     x: 28
                     y: 323
-                    width: 239
+                    width: 240
                     height: 140
                     color: "#3b5066"
                     radius: 10
@@ -219,61 +219,155 @@ ApplicationWindow {
                     border.width: 0
                     anchors.bottomMargin: 200
 
+
+
                     Text {
                         text: "FILTERS"
                         color: "white"
-                        font.pixelSize: 18
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        font.pixelSize: 17
+                        font.bold: true
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            top: parent.top
+                            topMargin: 5
+                        }
                     }
 
                     Dial {
                         id: dialLPF
-                        x: 31
-                        y: 50
-                        width: 70
-                        height: 70
-                        //Layout.minimumWidth: 30
-                        //Layout.preferredWidth: 70
+
+                        width: 65
+                        height: 65
+                        anchors {
+                            verticalCenter: parent.verticalCenter
+                            verticalCenterOffset: 15
+                            horizontalCenter: parent.horizontalCenter
+                            horizontalCenterOffset: -parent.width/4
+                        }
 
                         Text {
                             id: textLPF
-                            y: -21
+
                             text: qsTr("LPF")
                             color: "white"
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.bold: true
+                            anchors {
+                                horizontalCenter: parent.horizontalCenter
+                                bottom: parent.top
+                            }
                         }
 
                         Text {
                             id: text19
-                            y: 71
+
                             text: qsTr("19")
                             color: "white"
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.bold: true
+                            anchors {
+                                horizontalCenter: parent.horizontalCenter
+                                top: parent.bottom
+                            }
                         }
                     }
 
                     Dial {
                         id: dialHPF
-                        x: 143
-                        y: 50
-                        width: 70
-                        height: 70
+
+                        width: 65
+                        height: 65
+                        anchors {
+                            verticalCenter: parent.verticalCenter
+                            verticalCenterOffset: 15
+                            horizontalCenter: parent.horizontalCenter
+                            horizontalCenterOffset: parent.width/4
+                        }
+
+                        Rectangle {
+                            id: rectangleDB
+
+                            height: 20
+                            width: 45
+                            radius: 10
+                            color: "slategrey"
+                            anchors {
+                                horizontalCenter: parent.horizontalCenter
+                                horizontalCenterOffset: 23
+                                verticalCenter: textHPF.verticalCenter
+                            }
+
+                            Text {
+                                id: text18db
+                                text: qsTr("18 dB")
+                                font.pixelSize: 14
+                                font.bold: true
+                                color: "white"
+                                anchors.centerIn: parent
+
+                            }
+                        }
 
                         Text {
                             id: textHPF
-                            y: -19
 
                             text: qsTr("HPF")
                             color: "white"
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.bold: true
+                            anchors {
+                                horizontalCenter: parent.horizontalCenter
+                                horizontalCenterOffset: -23
+                                bottom: parent.top
+                                bottomMargin: 2
+                            }
                         }
 
                         Text {
                             id: text20000
-                            y: 71
+
                             text: qsTr("20000")
                             color: "white"
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.bold: true
+                            anchors {
+                                horizontalCenter: parent.horizontalCenter
+                                top: parent.bottom
+                            }
+                        }
+                    }
+
+                    Rectangle {
+                        id: rectanglePowerButton
+                        width: 24
+                        height: 24
+                        radius: 12
+                        color: "#a9a9a9"
+
+
+                        anchors {
+                            top: parent.top
+                            topMargin: 4
+                            right: parent.right
+                            rightMargin: 4
+                        }
+
+                        Image {
+                            id: imagePowerButton
+                            visible: true
+                            height:18
+                            width: 18
+
+                            source: "img/power.png"
+                            //source: "img/power-on.png"
+
+                            //anchors.fill: parent
+                            anchors.centerIn: parent
+                            anchors.verticalCenterOffset:-1
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            anchors.centerIn: parent
+                            onClicked: {
+                                parent.color = (parent.color == "#a9a9a9") ? "#32cd32" : "#a9a9a9"
+                            }
                         }
                     }
                 }

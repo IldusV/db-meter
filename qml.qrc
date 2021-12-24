@@ -3,5 +3,8 @@
         <file>main.qml</file>
         <file>img/TEAK_UV_meterX.svg</file>
         <file>Meter.qml</file>
+        <file>img/power-on.png</file>
+        <file>img/power-off.png</file>
+        <file>img/power.png</file>
     </qresource>
 </RCC>
