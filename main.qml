@@ -29,10 +29,15 @@ ApplicationWindow {
         anchors.topMargin: 0
         anchors.fill: parent
         currentIndex: tabBar.currentIndex
+        anchors.centerIn: parent
 
+        width: 800
+        anchors.verticalCenterOffset: 0
+        anchors.horizontalCenterOffset: 0
         Page {
-            width: 800
             height: 400
+
+            //anchors.centerIn: parent
 
             AudioClass {
                 id: audioclass
@@ -48,20 +53,29 @@ ApplicationWindow {
                 border.color: "darkgrey"
             }
 
-            Item {
-                id: meterGroup1
+      //      Item {
+        //        id: meterGroup1
+          //      anchors.horizontalCenter: parent.width/4
+
+                //x: 0
 
                 Meter {
-                    x: -50
-                    y: 20
-                    width: 496
-                    height: 339
-                }
 
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.horizontalCenterOffset: -190
+                    anchors.top: parent.top
+                    anchors.topMargin: 20
+
+                    //anchors.horizontalCenter: 0
+                    //anchors.centerIn: parent.width/2
+//                    width: 496
+//                    height: 339
+                }
+Item {
                 Text {
                     id: element
-                    x: 167
-                    y: 196
+                    x: 171
+                    y: 203
                     color: "#eeeeec"
                     text: qsTr("TRIM LEFT")
                     font.pixelSize: 16
@@ -101,43 +115,34 @@ ApplicationWindow {
 
                 Dial {
                     id: dial1
-                    x: 134
-                    y: 208
-                    width: 133
-                    height: 102
+                    x: 147
+                    y: 232
+                    width: 125
+                    height: 73
                     stepSize: 1
                     tickmarksVisible: true
                     maximumValue: 5
 
                 }
-
-                Rectangle {
-                    id: rectangle3
-                    x: 23
-                    y: 14
-                    width: 355
-                    height: 180
-                    color: "#00000000"
-                    radius: 20
-                    border.color: "darkgrey"
-                    border.width: 10
-                }
             }
 
             //***********************************************************
+            Meter {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.horizontalCenterOffset: 190
+                anchors.top: parent.top
+                anchors.topMargin: 20
+            }
 
             Item {
                 id: meterGroup2
 
-                Meter {
-                    x: 332
-                    y: 21
-                }
+
 
                 Text {
                     id: elementTextTrimLeft
-                    x: 544
-                    y: 196
+                    x: 551
+                    y: 201
                     color: "#eeeeec"
                     text: qsTr("TRIM RIGHT")
                     font.pixelSize: 16
@@ -177,25 +182,13 @@ ApplicationWindow {
 
                 Dial {
                     id: dial2
-                    x: 516
-                    y: 208
-                    width: 133
-                    height: 102
+                    x: 535
+                    y: 226
+                    width: 119
+                    height: 75
                     stepSize: 1
                     tickmarksVisible: true
                     maximumValue: 5
-                }
-                Rectangle {
-                    id: rectangle4
-                    x: 405
-                    y: 15
-                    width: 355
-                    height: 180
-                    color: "#00000000"
-                    radius: 20
-                    border.color: "darkgrey"
-                    border.width: 10
-
                 }
 
             }
@@ -234,7 +227,7 @@ ApplicationWindow {
                     }
 
                     Dial {
-                        id: dialLPF
+                        id: dialHPF
 
                         width: 65
                         height: 65
@@ -245,14 +238,39 @@ ApplicationWindow {
                             horizontalCenterOffset: -parent.width/4
                         }
 
-                        Text {
-                            id: textLPF
+                        Rectangle {
+                            id: rectangleDB
 
-                            text: qsTr("LPF")
+                            height: 20
+                            width: 45
+                            radius: 10
+                            color: "slategrey"
+                            anchors {
+                                horizontalCenter: parent.horizontalCenter
+                                horizontalCenterOffset: 22
+                                verticalCenter: textHPF.verticalCenter
+                            }
+
+                            Text {
+                                id: text6db
+                                text: qsTr("6 dB")
+                                font.pixelSize: 14
+                                font.bold: true
+                                color: "white"
+                                anchors.centerIn: parent
+
+                            }
+                        }
+
+                        Text {
+                            id: textHPF
+
+                            text: qsTr("HPF")
                             color: "white"
                             font.bold: true
                             anchors {
                                 horizontalCenter: parent.horizontalCenter
+                                horizontalCenterOffset: -22
                                 bottom: parent.top
                             }
                         }
@@ -271,10 +289,13 @@ ApplicationWindow {
                     }
 
                     Dial {
-                        id: dialHPF
+                        id: dialLPF
 
                         width: 65
                         height: 65
+                        tickmarksVisible: true
+
+
                         anchors {
                             verticalCenter: parent.verticalCenter
                             verticalCenterOffset: 15
@@ -283,7 +304,7 @@ ApplicationWindow {
                         }
 
                         Rectangle {
-                            id: rectangleDB
+                            id: rectangleDB1
 
                             height: 20
                             width: 45
@@ -291,8 +312,8 @@ ApplicationWindow {
                             color: "slategrey"
                             anchors {
                                 horizontalCenter: parent.horizontalCenter
-                                horizontalCenterOffset: 23
-                                verticalCenter: textHPF.verticalCenter
+                                horizontalCenterOffset: 22
+                                verticalCenter: textLPF.verticalCenter
                             }
 
                             Text {
@@ -307,14 +328,14 @@ ApplicationWindow {
                         }
 
                         Text {
-                            id: textHPF
+                            id: textLPF
 
-                            text: qsTr("HPF")
+                            text: qsTr("LPF")
                             color: "white"
                             font.bold: true
                             anchors {
                                 horizontalCenter: parent.horizontalCenter
-                                horizontalCenterOffset: -23
+                                horizontalCenterOffset: -22
                                 bottom: parent.top
                                 bottomMargin: 2
                             }

@@ -6,5 +6,6 @@
         <file>img/power-on.png</file>
         <file>img/power-off.png</file>
         <file>img/power.png</file>
+        <file>img/radiola_vu_scale.png</file>
     </qresource>
 </RCC>
