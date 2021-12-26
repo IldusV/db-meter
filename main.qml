@@ -3,7 +3,6 @@ import QtQuick.Window 2.12
 import QtQuick.Controls 2.5
 import QtQuick.Extras 1.4
 import QtQuick.Layouts 1.3
-//import QtQuick.Templates 2.5
 import QtGraphicalEffects 1.0
 import QtQuick.Controls.Styles 1.4
 import Audio 1.0
@@ -15,7 +14,7 @@ ApplicationWindow {
     title: qsTr("VU Meter")
     //    visibility: "FullScreen"
 
-    // This will prevent the window from expansion
+    // This will prevent the window from resizing
     maximumHeight: height
     maximumWidth: width
     minimumHeight: height
@@ -37,12 +36,9 @@ ApplicationWindow {
         Page {
             height: 400
 
-            //anchors.centerIn: parent
-
             AudioClass {
                 id: audioclass
             }
-
 
             Rectangle {
                 id: rectangle
@@ -53,156 +49,230 @@ ApplicationWindow {
                 border.color: "darkgrey"
             }
 
-      //      Item {
-        //        id: meterGroup1
-          //      anchors.horizontalCenter: parent.width/4
+            Rectangle {
+                width: 730
+                height: 196
+                color: "#3b5066"
+                anchors.horizontalCenterOffset: 0
 
-                //x: 0
+                anchors.topMargin: 10
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: parent.top
+            }
 
-                Meter {
+            Meter {
+                id: meterL
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.horizontalCenterOffset: -190
+                anchors.top: parent.top
+                anchors.topMargin: 17
+            }
 
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.horizontalCenterOffset: -190
-                    anchors.top: parent.top
-                    anchors.topMargin: 20
+            Dial {
+                width: 70
+                height: 70
+                stepSize: 1
+                tickmarksVisible: true
+                maximumValue: 2
 
-                    //anchors.horizontalCenter: 0
-                    //anchors.centerIn: parent.width/2
-//                    width: 496
-//                    height: 339
+                anchors {
+                    horizontalCenter: meterL.horizontalCenter
+                    top: meterL.bottom
+                    topMargin: 35
                 }
-Item {
+
+                Rectangle {
+                    width: parent.width + 2
+                    height: parent.height + 2
+                    radius: width / 2
+                    color: "#3b5066"
+                    anchors.centerIn: parent
+                    z: -1
+
+                    Rectangle {
+                        width: 4
+                        height: 4
+                        radius: 2
+                        color: "white"
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            bottom: parent.top
+                            bottomMargin: 2
+                        }
+                    }
+
+                    Rectangle {
+                        width: 4
+                        height: 4
+                        radius: 2
+                        color: "white"
+                        anchors {
+                            centerIn: parent
+                            horizontalCenter: parent.horizontalCenter
+                            horizontalCenterOffset: 37
+                            verticalCenterOffset: 17
+                        }
+                    }
+
+                    Rectangle {
+                        width: 4
+                        height: 4
+                        radius: 2
+                        color: "white"
+                        anchors {
+                            centerIn: parent
+                            horizontalCenter: parent.horizontalCenter
+                            horizontalCenterOffset: -37
+                            verticalCenterOffset: 17
+                        }
+                    }
+                }
+
                 Text {
-                    id: element
-                    x: 171
-                    y: 203
                     color: "#eeeeec"
                     text: qsTr("TRIM LEFT")
+                    font.family: "Ubuntu"
+                    font.bold: true
                     font.pixelSize: 16
-                }
-
-                Switch {
-                    id: element2
-                    x: 22
-                    y: 248
-                    font.pixelSize: 14
-
-                    Text {
-                        id: element2Text
-                        x: 10
-                        y: 42
-                        text: qsTr("ON/OFF")
-                        color: "white"
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        bottom: parent.top
+                        bottomMargin: 7
                     }
                 }
 
-                StatusIndicator {
-                    id: statusIndicator
-                    x: 28
-                    y: 208
-                    active: element2.checked ? true : false
-                    color: "green"
+                Rectangle {
+                    width: 38
+                    height: 16
+                    radius: 8
+                    color: "#3b5066"
+
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        top: parent.bottom
+                        topMargin: 4
+                    }
 
                     Text {
-                        id: textL
-                        x: 45
-                        y: 4
-                        text: qsTr("L")
+                        text: qsTr("6.5")
                         color: "white"
-                        font.pixelSize: 22
+                        font.bold: true
+                        anchors.centerIn: parent
                     }
-                }
-
-                Dial {
-                    id: dial1
-                    x: 147
-                    y: 232
-                    width: 125
-                    height: 73
-                    stepSize: 1
-                    tickmarksVisible: true
-                    maximumValue: 5
-
                 }
             }
 
             //***********************************************************
+
             Meter {
+                id: meterR
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.horizontalCenterOffset: 190
                 anchors.top: parent.top
-                anchors.topMargin: 20
+                anchors.topMargin: 17
             }
 
-            Item {
-                id: meterGroup2
+            Dial {
+                width: 70
+                height: 70
+                stepSize: 1
+                tickmarksVisible: true
+                maximumValue: 3
 
+                anchors {
+                    horizontalCenter: meterR.horizontalCenter
+                    top: meterR.bottom
+                    topMargin: 35
+                }
 
+                Rectangle {
+                    width: parent.width + 2
+                    height: parent.height + 2
+                    radius: width / 2
+                    color: "#3b5066"
+                    anchors.centerIn: parent
+                    z: -1
+
+                    Rectangle {
+                        width: 4
+                        height: 4
+                        radius: 2
+                        color: "white"
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            bottom: parent.top
+                            bottomMargin: 2
+                        }
+                    }
+
+                    Rectangle {
+                        width: 4
+                        height: 4
+                        radius: 2
+                        color: "white"
+                        anchors {
+                            centerIn: parent
+                            horizontalCenter: parent.horizontalCenter
+                            horizontalCenterOffset: 37
+                            verticalCenterOffset: 17
+                        }
+                    }
+
+                    Rectangle {
+                        width: 4
+                        height: 4
+                        radius: 2
+                        color: "white"
+                        anchors {
+                            centerIn: parent
+                            horizontalCenter: parent.horizontalCenter
+                            horizontalCenterOffset: -37
+                            verticalCenterOffset: 17
+                        }
+                    }
+                }
 
                 Text {
-                    id: elementTextTrimLeft
-                    x: 551
-                    y: 201
                     color: "#eeeeec"
                     text: qsTr("TRIM RIGHT")
+                    font.bold: true
                     font.pixelSize: 16
-                }
-
-                Switch {
-                    id: switchOnOffRight
-                    x: 413
-                    y: 257
-                    font.pixelSize: 14
-
-                    Text {
-                        id: elementTextOnOff
-                        x: 10
-                        y: 42
-                        text: qsTr("ON/OFF")
-                        color: "white"
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        bottom: parent.top
+                        bottomMargin: 7
                     }
                 }
 
-                StatusIndicator {
-                    id: statusIndicatorRight
-                    x: 413
-                    y: 208
-                    active: switchOnOffRight.checked ? true : false
-                    color: "green"
+                Rectangle {
+                    width: 38
+                    height: 16
+                    radius: 8
+                    color: "#3b5066"
+
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        top: parent.bottom
+                        topMargin: 4
+                    }
 
                     Text {
-                        id: textR
-                        x: 45
-                        y: 4
-                        text: qsTr("R")
+                        text: qsTr("4.5")
                         color: "white"
-                        font.pixelSize: 22
+                        font.bold: true
+                        anchors.centerIn: parent
                     }
                 }
-
-                Dial {
-                    id: dial2
-                    x: 535
-                    y: 226
-                    width: 119
-                    height: 75
-                    stepSize: 1
-                    tickmarksVisible: true
-                    maximumValue: 5
-                }
-
             }
 
             RowLayout {
-                x: 28
-                y: 323
-                width: 735
-                height: 140
+                anchors {
+                    horizontalCenter:  parent.horizontalCenter
+                    bottom: parent.bottom
+                    bottomMargin: 15
+                }
 
                 Rectangle {
-                    id: rectangleFilters
-                    x: 28
-                    y: 323
                     width: 240
                     height: 140
                     color: "#3b5066"
@@ -211,8 +281,6 @@ Item {
                     Layout.fillWidth: true
                     border.width: 0
                     anchors.bottomMargin: 200
-
-
 
                     Text {
                         text: "FILTERS"
@@ -227,8 +295,6 @@ Item {
                     }
 
                     Dial {
-                        id: dialHPF
-
                         width: 65
                         height: 65
                         anchors {
@@ -239,8 +305,6 @@ Item {
                         }
 
                         Rectangle {
-                            id: rectangleDB
-
                             height: 20
                             width: 45
                             radius: 10
@@ -252,7 +316,6 @@ Item {
                             }
 
                             Text {
-                                id: text6db
                                 text: qsTr("6 dB")
                                 font.pixelSize: 14
                                 font.bold: true
@@ -276,8 +339,6 @@ Item {
                         }
 
                         Text {
-                            id: text19
-
                             text: qsTr("19")
                             color: "white"
                             font.bold: true
@@ -289,12 +350,9 @@ Item {
                     }
 
                     Dial {
-                        id: dialLPF
-
                         width: 65
                         height: 65
                         tickmarksVisible: true
-
 
                         anchors {
                             verticalCenter: parent.verticalCenter
@@ -304,8 +362,6 @@ Item {
                         }
 
                         Rectangle {
-                            id: rectangleDB1
-
                             height: 20
                             width: 45
                             radius: 10
@@ -355,18 +411,28 @@ Item {
                     }
 
                     Rectangle {
-                        id: rectanglePowerButton
                         width: 24
                         height: 24
                         radius: 12
                         color: "#a9a9a9"
-
+                        border.color: "darkgrey"
+                        border.width: 1
 
                         anchors {
                             top: parent.top
                             topMargin: 4
                             right: parent.right
                             rightMargin: 4
+                        }
+
+                        Rectangle {
+                            id: centerbuttonlight
+                            width: 14
+                            height: 14
+                            radius: 7
+                            color: "#85d485"
+                            visible: false
+                            anchors.centerIn: parent
                         }
 
                         Image {
@@ -376,9 +442,8 @@ Item {
                             width: 18
 
                             source: "img/power.png"
-                            //source: "img/power-on.png"
+                            opacity: 0.6
 
-                            //anchors.fill: parent
                             anchors.centerIn: parent
                             anchors.verticalCenterOffset:-1
                         }
@@ -386,155 +451,345 @@ Item {
                         MouseArea {
                             anchors.fill: parent
                             anchors.centerIn: parent
+                            property var ledstatus: false
+
                             onClicked: {
-                                parent.color = (parent.color == "#a9a9a9") ? "#32cd32" : "#a9a9a9"
+                                //parent.color = (parent.color == "#a9a9a9") ? "#32cd32" : "#a9a9a9"
+                                ledstatus = !ledstatus
+                                //parent.color = ledstatus ? "#32cd32" : "#a9a9a9"
+                                if (ledstatus == true) {
+                                    parent.color = "#32cd32"
+                                    centerbuttonlight.visible = true;
+                                }
+                                else {
+                                    parent.color = "#a9a9a9"
+                                    centerbuttonlight.visible = false;
+                                }
+
+
                             }
                         }
                     }
                 }
 
                 Rectangle {
-                    id: rectangleDynEq
-                    x: 273
-                    y: 323
-                    width: 239
+                    width: 240
                     height: 140
                     color: "#3b5066"
                     radius: 10
+
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+
                     border.width: 0
                     anchors.bottomMargin: 200
 
                     Text {
-                        id: textrectangleDynEq
-                        text: qsTr("DYN EQ")
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        font.pixelSize: 18
+                        text: "DYN EQ"
                         color: "white"
+                        font.pixelSize: 17
+                        font.bold: true
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            top: parent.top
+                            topMargin: 5
+                        }
                     }
 
                     Dial {
-                        x: 31
-                        y: 50
-                        height: 70
-                        width: 70
+                        width: 65
+                        height: 65
+
+                        anchors {
+                            verticalCenter: parent.verticalCenter
+                            verticalCenterOffset: 15
+                            horizontalCenter: parent.horizontalCenter
+                            horizontalCenterOffset: -parent.width/4
+                        }
+
+                        Rectangle {
+                            height: 20
+                            width: 45
+                            radius: 10
+                            color: "slategrey"
+                            anchors {
+                                horizontalCenter: parent.horizontalCenter
+                                horizontalCenterOffset: -22
+                                verticalCenter: textFreqOfDynEq.verticalCenter
+                            }
+
+                            Text {
+                                text: qsTr("BP n")
+                                font.pixelSize: 14
+                                font.bold: true
+                                color: "white"
+                                anchors.centerIn: parent
+                            }
+                        }
 
                         Text {
-                            id: textFreqq
-                            y: -18
-
+                            id: textFreqOfDynEq
                             text: qsTr("FREQ")
                             color: "white"
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.bold: true
+                            anchors {
+                                horizontalCenter: parent.horizontalCenter
+                                horizontalCenterOffset: 22
+                                bottom: parent.top
+                            }
                         }
 
                         Text {
-                            id: text2736
-                            y: 71
                             text: qsTr("2736")
                             color: "white"
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.bold: true
+                            anchors {
+                                horizontalCenter: parent.horizontalCenter
+                                top: parent.bottom
+                            }
                         }
-
                     }
 
                     Dial {
-                        x: 143
-                        y: 50
-                        height: 70
-                        width: 70
+                        width: 65
+                        height: 65
+                        tickmarksVisible: true
+
+                        anchors {
+                            verticalCenter: parent.verticalCenter
+                            verticalCenterOffset: 15
+                            horizontalCenter: parent.horizontalCenter
+                            horizontalCenterOffset: parent.width/4
+                        }
 
                         Text {
-                            id: textDepth
-                            y: -18
-
                             text: qsTr("DEPTH")
                             color: "white"
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.bold: true
+                            anchors {
+                                horizontalCenter: parent.horizontalCenter
+                                bottom: parent.top
+                                bottomMargin: 2
+                            }
                         }
 
                         Text {
-                            id: text100
-                            y: 71
                             text: qsTr("100")
                             color: "white"
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.bold: true
+                            anchors {
+                                horizontalCenter: parent.horizontalCenter
+                                top: parent.bottom
+                            }
                         }
-
                     }
 
+                    Rectangle {
+                        width: 24
+                        height: 24
+                        radius: 12
+                        color: "#a9a9a9"
+                        border.color: "darkgrey"
+                        border.width: 1
 
+                        anchors {
+                            top: parent.top
+                            topMargin: 4
+                            right: parent.right
+                            rightMargin: 4
+                        }
+
+                        Rectangle {
+                            id: centerbuttonlight2
+                            width: 14
+                            height: 14
+                            radius: 7
+                            color: "#85d485"
+                            visible: false
+                            anchors.centerIn: parent
+                        }
+
+                        Image {
+                            visible: true
+                            height:18
+                            width: 18
+
+                            source: "img/power.png"
+                            opacity: 0.6
+
+                            anchors.centerIn: parent
+                            anchors.verticalCenterOffset:-1
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            anchors.centerIn: parent
+                            property var ledstatus: false
+
+                            onClicked: {
+                                //parent.color = (parent.color == "#a9a9a9") ? "#32cd32" : "#a9a9a9"
+                                ledstatus = !ledstatus
+                                //parent.color = ledstatus ? "#32cd32" : "#a9a9a9"
+                                if (ledstatus == true) {
+                                    parent.color = "#32cd32"
+                                    centerbuttonlight2.visible = true;
+                                }
+                                else {
+                                    parent.color = "#a9a9a9"
+                                    centerbuttonlight2.visible = false;
+                                }
+                            }
+                        }
+                    }
                 }
 
                 Rectangle {
-                    id: rectangleMonoMaker
-                    x: 527
-                    y: 323
-                    width: 239
+                    width: 240
                     height: 140
                     color: "#3b5066"
                     radius: 10
+
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+
                     border.width: 0
                     anchors.bottomMargin: 200
 
                     Text {
-                        id: textMonoMaker
-                        text: qsTr("MONO MAKER")
+                        text: "MONO MAKER"
                         color: "white"
-                        font.pixelSize: 18
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        font.pixelSize: 17
+                        font.bold: true
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            top: parent.top
+                            topMargin: 5
+                        }
                     }
 
                     Dial {
-                        x: 31
-                        y: 50
-                        height: 70
-                        width: 70
+                        width: 65
+                        height: 65
+
+                        anchors {
+                            verticalCenter: parent.verticalCenter
+                            verticalCenterOffset: 15
+                            horizontalCenter: parent.horizontalCenter
+                            horizontalCenterOffset: -parent.width/4
+                        }
 
                         Text {
-                            id: textFreq
-                            y: -18
-
                             text: qsTr("FREQ")
                             color: "white"
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.bold: true
+                            anchors {
+                                horizontalCenter: parent.horizontalCenter
+                                bottom: parent.top
+                            }
                         }
 
                         Text {
-                            id: text80
-                            y: 71
                             text: qsTr("80")
                             color: "white"
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.bold: true
+                            anchors {
+                                horizontalCenter: parent.horizontalCenter
+                                top: parent.bottom
+                            }
                         }
                     }
 
                     Dial {
-                        x: 143
-                        y: 50
-                        height: 70
-                        width: 70
+                        width: 65
+                        height: 65
+                        tickmarksVisible: true
+
+                        anchors {
+                            verticalCenter: parent.verticalCenter
+                            verticalCenterOffset: 15
+                            horizontalCenter: parent.horizontalCenter
+                            horizontalCenterOffset: parent.width/4
+                        }
 
                         Text {
-                            id: textAmount
-                            y: -18
-
                             text: qsTr("AMOUNT")
-                            anchors.horizontalCenterOffset: 0
                             color: "white"
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.bold: true
+                            anchors {
+                                horizontalCenter: parent.horizontalCenter
+                                bottom: parent.top
+                                bottomMargin: 2
+                            }
                         }
 
                         Text {
-                            id: text1001
-                            y: 71
                             text: qsTr("100")
-                            anchors.horizontalCenterOffset: 0
                             color: "white"
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            font.bold: true
+                            anchors {
+                                horizontalCenter: parent.horizontalCenter
+                                top: parent.bottom
+                            }
                         }
-
                     }
 
+                    Rectangle {
+                        width: 24
+                        height: 24
+                        radius: 12
+                        color: "#a9a9a9"
+                        border.color: "darkgrey"
+                        border.width: 1
+
+                        anchors {
+                            top: parent.top
+                            topMargin: 4
+                            right: parent.right
+                            rightMargin: 4
+                        }
+
+                        Rectangle {
+                            id: centerbuttonlight3
+                            width: 14
+                            height: 14
+                            radius: 7
+                            color: "#85d485"
+                            visible: false
+                            anchors.centerIn: parent
+                        }
+
+                        Image {
+                            visible: true
+                            height:18
+                            width: 18
+
+                            source: "img/power.png"
+                            opacity: 0.6
+
+                            anchors.centerIn: parent
+                            anchors.verticalCenterOffset:-1
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            anchors.centerIn: parent
+                            property var ledstatus: false
+
+                            onClicked: {
+                                //parent.color = (parent.color == "#a9a9a9") ? "#32cd32" : "#a9a9a9"
+                                ledstatus = !ledstatus
+                                //parent.color = ledstatus ? "#32cd32" : "#a9a9a9"
+                                if (ledstatus == true) {
+                                    parent.color = "#32cd32"
+                                    centerbuttonlight3.visible = true;
+                                }
+                                else {
+                                    parent.color = "#a9a9a9"
+                                    centerbuttonlight3.visible = false;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

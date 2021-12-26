@@ -102,8 +102,9 @@ Rectangle {
                 y: 0
                 x: 0
                 height: outerRadius
+                //color: "#0d0b0b"
+                 color: Qt.rgba(0.66, 0.3, 0, 1)
                 width: 3
-                color: "dimgray"
                 radius: 0
             }
         }
