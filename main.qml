@@ -49,15 +49,27 @@ ApplicationWindow {
 
                 ComboBox {
                     id: comboBox
-                    x: 263
-                    y: 220
+                    x: 254
+                    y: 239
                     width: 273
                     currentIndex: 0
                     height: 25
-//                    font.pixelSize: 10
                     model: audioclass.getSourceList()
                     onActivated: audioclass.setInputCurrentSourceIdx(comboBox.currentIndex)
+                    anchors {
+                        centerIn: parent
+                        verticalCenterOffset: 25
+                    }
 
+                    Text {
+                        text: "Input Device"
+                        color: "white"
+                        font.pixelSize: 12
+                        font.bold: true
+                        anchors.left: parent.left
+                        anchors.bottom: parent.top
+                        anchors.bottomMargin: 5
+                   }
                 }
             }
 

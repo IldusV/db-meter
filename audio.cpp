@@ -66,18 +66,17 @@ void AudioClass::initializeInputSource(int n)
 
     if (m_audio_input != NULL)
     {
-        disconnect(m_audio_input, SIGNAL(notify()),0,0);
+        m_audio_input->stop();
+        disconnect(m_audio_input, SIGNAL(notify()), 0, 0);
         delete m_audio_input;
     }
 
-    //m_audio_input->stop();
     m_audio_input = new QAudioInput(m_input_source_device_list[n], audio_format, this);
     m_audio_input->setVolume(1);
     m_audio_input->setNotifyInterval(70);
 
     mInputBuffer.open(QBuffer::ReadWrite);
     m_audio_input->start(&mInputBuffer);
-
 
     connect(m_audio_input, SIGNAL(notify()), SLOT(readMore()));
 }
@@ -128,7 +127,7 @@ void AudioClass::readMore()
             result = result + i;
     }
     result = (double)result/mSamples.size();
-    qDebug() << result;
+    //qDebug() << result;
     setLvl(result);
 
     mSamples.clear();
