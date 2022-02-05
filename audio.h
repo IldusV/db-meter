@@ -14,34 +14,31 @@ class AudioClass : public QObject
 
 public:
     explicit AudioClass(QObject *parent = nullptr);
-//    Q_INVOKABLE void triggerEvent(uint8_t db_value) {
-//     emit somethingHappened(db_value);
-//    }
     double lvl();
 
-private:
-
+    Q_INVOKABLE QStringList getSourceList();
 
 signals:
-    //void somethingHappened(uint8_t db_value);
     void lvlChanged();
 
 public slots:
     void setLvl(double lvl);
+    void setInputCurrentSourceIdx(int);
 
 private slots:
     void readMore();
 
 private:
-    QAudioDeviceInfo m_Inputdevice;
-    QAudioFormat m_format;
-    QAudioInput *m_audioInput;
-    QIODevice *m_input;
+    QAudioInput *m_audio_input;
     QVector<char> m_buffer;
     QBuffer mInputBuffer;
     QVector<double> mSamples;
     QVector<double> mIndices;
     double m_lvl;
+    QStringList m_input_source_name_list;
+    uint8_t m_current_input_source_idx;
+    QList<QAudioDeviceInfo> m_input_source_device_list;
+    void initializeInputSource(int);
 };
 
 #endif // AUDIO_H

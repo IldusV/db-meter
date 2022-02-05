@@ -5,60 +5,25 @@ const int BufferSize = 14096;
 
 AudioClass::AudioClass(QObject *parent)
     : QObject(parent),
-      m_Inputdevice(QAudioDeviceInfo::defaultInputDevice()),
-      m_audioInput(0),
-      m_input(0),
       m_buffer(BufferSize),
-      m_lvl(0)
+      m_lvl(0),
+      m_input_source_name_list(0),
+      m_current_input_source_idx(0),
+      m_audio_input(NULL)
 {
     qDebug() << "constructing audio object...";
 
-    QList<QAudioDeviceInfo> inputDevices = QAudioDeviceInfo::availableDevices(QAudio::AudioInput);
+    m_input_source_device_list = QAudioDeviceInfo::availableDevices(QAudio::AudioInput);
 
-    QAudioDeviceInfo custom_input_device;
-    for(QAudioDeviceInfo d : inputDevices)
-    {
-        qDebug() << "list" << d.deviceName();
-        if(d.deviceName() == "alsa_input.usb-Plantronics_Plantronics_Blackwire_315.1_E44B606D808E8247B93AB73A3A1F9CF5-00.analog-stereo")
-        {
-            custom_input_device = d;
-            qDebug() << "Custom input device has been found!";
-        }
-    }
-    qDebug() << "The custom input audio device is:" << custom_input_device.deviceName();
+    for(QAudioDeviceInfo element : m_input_source_device_list)
+        m_input_source_name_list.append(element.deviceName());
 
-   // QAudioFormat preferred_format = custom_input_device.preferredFormat();
-   // qDebug() << "Preferred codec:" << preferred_format.codec();
-    qDebug() << "Preferred codec:" << custom_input_device.preferredFormat().codec();
-    qDebug() << "Preferred sample size:" << custom_input_device.preferredFormat().sampleSize();
+    initializeInputSource(0);
+}
 
-    m_format.setSampleRate(8000);
-    m_format.setChannelCount(1);
-    m_format.setSampleSize(custom_input_device.preferredFormat().sampleSize());
-    m_format.setSampleType(QAudioFormat::SignedInt);
-    m_format.setByteOrder(QAudioFormat::LittleEndian);
-    m_format.setCodec(custom_input_device.preferredFormat().codec());
-
-    QAudioDeviceInfo InfoIn(QAudioDeviceInfo::defaultInputDevice());
-    //QAudioDeviceInfo InfoIn(custom_input_device);
-    if(!InfoIn.isFormatSupported(m_format))
-    {
-        m_format = InfoIn.nearestFormat(m_format);
-        qDebug() << "OOOPS the format is wrong! Using nearest congiguration...";
-    }
-
-    m_Inputdevice = custom_input_device;
-
-    m_audioInput = new QAudioInput(m_Inputdevice, m_format, this);
-    m_audioInput->setVolume(1);
-    m_audioInput->setNotifyInterval(70);
-
-    mInputBuffer.open(QBuffer::ReadWrite);
-    m_audioInput->start(&mInputBuffer);
-    //m_input = m_audioInput->start();
-
-    //connect(&mInputBuffer, SIGNAL(readyRead()), SLOT(readMore()));
-    connect(m_audioInput, SIGNAL(notify()), SLOT(readMore()));
+QStringList AudioClass::getSourceList()
+{
+    return m_input_source_name_list;
 }
 
 double AudioClass::lvl()
@@ -73,6 +38,60 @@ void AudioClass::setLvl(double lvl)
         m_lvl = lvl;
         emit lvlChanged();
     }
+}
+
+void AudioClass::initializeInputSource(int n)
+{
+    QAudioFormat audio_format;
+
+    if(n)
+        n--;
+    qDebug() << n;
+    qDebug() << "The custom input audio device is:" << m_input_source_device_list[n].deviceName();
+
+    audio_format.setSampleRate(8000);
+    audio_format.setChannelCount(1);
+    audio_format.setSampleSize(m_input_source_device_list[n].preferredFormat().sampleSize());
+    audio_format.setSampleType(QAudioFormat::SignedInt);
+    audio_format.setByteOrder(QAudioFormat::LittleEndian);
+    audio_format.setCodec(m_input_source_device_list[n].preferredFormat().codec());
+
+    QAudioDeviceInfo InfoIn(QAudioDeviceInfo::defaultInputDevice());
+    if(!InfoIn.isFormatSupported(audio_format))
+    {
+        audio_format = InfoIn.nearestFormat(audio_format);
+        qDebug() << "OOOPS the format is wrong! Using nearest congiguration...";
+    }
+
+
+    if (m_audio_input != NULL)
+    {
+        disconnect(m_audio_input, SIGNAL(notify()),0,0);
+        delete m_audio_input;
+    }
+
+    //m_audio_input->stop();
+    m_audio_input = new QAudioInput(m_input_source_device_list[n], audio_format, this);
+    m_audio_input->setVolume(1);
+    m_audio_input->setNotifyInterval(70);
+
+    mInputBuffer.open(QBuffer::ReadWrite);
+    m_audio_input->start(&mInputBuffer);
+
+
+    connect(m_audio_input, SIGNAL(notify()), SLOT(readMore()));
+}
+
+void AudioClass::setInputCurrentSourceIdx(int n)
+{
+    if(n != m_current_input_source_idx)
+    {
+        m_current_input_source_idx = n;
+        initializeInputSource(n);
+        //emit m_current_input_source_idxChanged;
+
+    }
+    qDebug() << "setInputSource called:" << n;
 }
 
 void AudioClass::readMore()
@@ -109,7 +128,7 @@ void AudioClass::readMore()
             result = result + i;
     }
     result = (double)result/mSamples.size();
-
+    qDebug() << result;
     setLvl(result);
 
     mSamples.clear();
@@ -117,4 +136,6 @@ void AudioClass::readMore()
     mInputBuffer.buffer().clear();
     mInputBuffer.seek(0);
 }
+
+
 

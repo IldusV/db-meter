@@ -11,11 +11,6 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    //QQmlComponent component(&engine, "qrc:/main.qml");
-    //QObject *object = component.create();
-
-    //audio audio_obj;
-
     qmlRegisterType<AudioClass>("Audio", 1, 0, "AudioClass");
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));

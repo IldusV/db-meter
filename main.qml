@@ -37,16 +37,28 @@ ApplicationWindow {
             height: 400
 
             AudioClass {
-                id: audioclass
+               id: audioclass
             }
 
             Rectangle {
-                id: rectangle
                 color: "slategray"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 border.width: 10
                 border.color: "darkgrey"
+
+                ComboBox {
+                    id: comboBox
+                    x: 263
+                    y: 220
+                    width: 273
+                    currentIndex: 0
+                    height: 25
+//                    font.pixelSize: 10
+                    model: audioclass.getSourceList()
+                    onActivated: audioclass.setInputCurrentSourceIdx(comboBox.currentIndex)
+
+                }
             }
 
             Rectangle {
@@ -60,104 +72,242 @@ ApplicationWindow {
                 anchors.top: parent.top
             }
 
+            Rectangle {
+                width: 35
+                height: 35
+                radius: 2
+
+                color: "#3b5066"
+                border.color: "black"
+                border.width: 1
+
+                anchors {
+                    top: meterL.bottom
+                    topMargin: 80
+                    horizontalCenter: meterL.horizontalCenter
+                    horizontalCenterOffset: -88
+
+                }
+
+                RadialGradient {
+                    id: radialGradient1
+
+                    anchors.centerIn: parent
+                    //keep parent borders visible this way
+                    width: parent.width-2
+                    height: parent.height-2
+
+                    gradient: Gradient {
+                        GradientStop { position: 0.0; color: "lightgreen" }
+                        GradientStop { position: 0.5; color: "green" }
+                    }
+                    visible: false
+                }
+
+                Text {
+                    id: textMS
+                    text: qsTr("MS")
+                    anchors.centerIn: parent
+                    font.pixelSize: 16
+                    font.bold: true
+                    color: "white"
+                }
+
+                MouseArea {
+                    property var ms_active: false
+                    anchors.fill: parent
+                    onClicked: {
+                        if (ms_active) {
+                            radialGradient1.visible = false
+                            textMS.color = "white"
+                            textMS.font.bold = true
+                        }
+                        else {
+                            radialGradient1.visible = true
+                            textMS.color = "black"
+                            textMS.font.bold = false
+                        }
+                        ms_active = !ms_active
+                        console.log("button MS pressed")
+                    }
+                }
+            }
+
+            Rectangle {
+                width: 35
+                height: 35
+                radius: 2
+                color: "#3b5066"
+                border.color: "black"
+                border.width: 1
+
+                anchors {
+                    top: meterL.bottom
+                    topMargin: 80
+                    horizontalCenter: meterL.horizontalCenter
+                    horizontalCenterOffset: -140
+                }
+
+                Text {
+                    y: -24
+                    width: 83.55
+                    text: "DISPLAY"
+                    font.bold: true
+                    anchors.horizontalCenterOffset: 38
+                    font.pixelSize: 16
+                    color: "white"
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        bottom: parent.top
+                        bottomMargin: 5
+                    }
+                }
+
+                RadialGradient {
+                    id: radialGradientLR
+
+                    anchors.centerIn: parent
+                    //keep parent borders visible this way
+                    width: parent.width-2
+                    height: parent.height-2
+
+                    gradient: Gradient {
+                        GradientStop { position: 0.0; color: "lightgreen" }
+                        GradientStop { position: 0.5; color: "green" }
+                    }
+                    visible: false
+                }
+
+                Text {
+                    id: textLR
+                    text: qsTr("LR")
+                    anchors.centerIn: parent
+                    font.pixelSize: 16
+                    font.bold: true
+                    color: "white"
+                }
+
+                MouseArea {
+                    property var lr_active: false
+                    anchors.fill: parent
+                    onClicked: {
+                        if (lr_active) {
+                            radialGradientLR.visible = false
+                            textLR.color = "white"
+                            textLR.font.bold = true
+                        }
+                        else {
+                            radialGradientLR.visible = true
+                            textLR.color = "black"
+                            textLR.font.bold = false
+                        }
+                        lr_active = !lr_active
+                        console.log("button LR pressed")
+                    }
+                }
+            }
+
+
             Meter {
                 id: meterL
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.horizontalCenterOffset: -190
                 anchors.top: parent.top
                 anchors.topMargin: 17
-            }
 
-            Dial {
-                width: 70
-                height: 70
-                stepSize: 1
-                tickmarksVisible: true
-                maximumValue: 2
-
-                anchors {
-                    horizontalCenter: meterL.horizontalCenter
-                    top: meterL.bottom
-                    topMargin: 35
-                }
-
-                Rectangle {
-                    width: parent.width + 2
-                    height: parent.height + 2
-                    radius: width / 2
-                    color: "#3b5066"
-                    anchors.centerIn: parent
-                    z: -1
-
-                    Rectangle {
-                        width: 4
-                        height: 4
-                        radius: 2
-                        color: "white"
-                        anchors {
-                            horizontalCenter: parent.horizontalCenter
-                            bottom: parent.top
-                            bottomMargin: 2
-                        }
-                    }
-
-                    Rectangle {
-                        width: 4
-                        height: 4
-                        radius: 2
-                        color: "white"
-                        anchors {
-                            centerIn: parent
-                            horizontalCenter: parent.horizontalCenter
-                            horizontalCenterOffset: 37
-                            verticalCenterOffset: 17
-                        }
-                    }
-
-                    Rectangle {
-                        width: 4
-                        height: 4
-                        radius: 2
-                        color: "white"
-                        anchors {
-                            centerIn: parent
-                            horizontalCenter: parent.horizontalCenter
-                            horizontalCenterOffset: -37
-                            verticalCenterOffset: 17
-                        }
-                    }
-                }
-
-                Text {
-                    color: "#eeeeec"
-                    text: qsTr("TRIM LEFT")
-                    font.family: "Ubuntu"
-                    font.bold: true
-                    font.pixelSize: 16
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                        bottom: parent.top
-                        bottomMargin: 7
-                    }
-                }
-
-                Rectangle {
-                    width: 38
-                    height: 16
-                    radius: 8
-                    color: "#3b5066"
+                Dial {
+                    x: 125
+                    y: 215
+                    width: 70
+                    height: 70
+                    stepSize: 1
+                    tickmarksVisible: true
+                    maximumValue: 2
 
                     anchors {
-                        horizontalCenter: parent.horizontalCenter
-                        top: parent.bottom
-                        topMargin: 4
+                        horizontalCenter: meterL.horizontalCenter
+                        top: meterL.bottom
+                        topMargin: 35
+                    }
+
+                    Rectangle {
+                        width: parent.width + 2
+                        height: parent.height + 2
+                        radius: width / 2
+                        color: "#3b5066"
+                        anchors.centerIn: parent
+                        z: -1
+
+                        Rectangle {
+                            width: 4
+                            height: 4
+                            radius: 2
+                            color: "white"
+                            anchors {
+                                horizontalCenter: parent.horizontalCenter
+                                bottom: parent.top
+                                bottomMargin: 2
+                            }
+                        }
+
+                        Rectangle {
+                            width: 4
+                            height: 4
+                            radius: 2
+                            color: "white"
+                            anchors {
+                                centerIn: parent
+                                horizontalCenter: parent.horizontalCenter
+                                horizontalCenterOffset: 37
+                                verticalCenterOffset: 17
+                            }
+                        }
+
+                        Rectangle {
+                            width: 4
+                            height: 4
+                            radius: 2
+                            color: "white"
+                            anchors {
+                                centerIn: parent
+                                horizontalCenter: parent.horizontalCenter
+                                horizontalCenterOffset: -37
+                                verticalCenterOffset: 17
+                            }
+                        }
                     }
 
                     Text {
-                        text: qsTr("6.5")
-                        color: "white"
+                        color: "#eeeeec"
+                        text: qsTr("TRIM LEFT")
+                        font.family: "Ubuntu"
                         font.bold: true
-                        anchors.centerIn: parent
+                        font.pixelSize: 16
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            bottom: parent.top
+                            bottomMargin: 7
+                        }
+                    }
+
+                    Rectangle {
+                        width: 38
+                        height: 16
+                        radius: 8
+                        color: "#3b5066"
+
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            top: parent.bottom
+                            topMargin: 4
+                        }
+
+                        Text {
+                            text: qsTr("6.5")
+                            color: "white"
+                            font.bold: true
+                            anchors.centerIn: parent
+                        }
                     }
                 }
             }
