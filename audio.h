@@ -15,7 +15,6 @@ class AudioClass : public QObject
 public:
     explicit AudioClass(QObject *parent = nullptr);
     double lvl();
-
     Q_INVOKABLE QStringList getSourceList();
 
 signals:
@@ -29,11 +28,7 @@ private slots:
     void readMore();
 
 private:
-    QAudioInput *m_audio_input;
-    QVector<char> m_buffer;
-    QBuffer mInputBuffer;
-    QVector<double> mSamples;
-    QVector<double> mIndices;
+    QBuffer m_input_buffer;
     double m_lvl;
     QStringList m_input_source_name_list;
     uint8_t m_current_input_source_idx;

@@ -5,11 +5,10 @@ const int BufferSize = 14096;
 
 AudioClass::AudioClass(QObject *parent)
     : QObject(parent),
-      m_buffer(BufferSize),
       m_lvl(0),
       m_input_source_name_list(0),
-      m_current_input_source_idx(0),
-      m_audio_input(NULL)
+      m_current_input_source_idx(0)
+      //m_audio_input(NULL)
 {
     qDebug() << "constructing audio object...";
 
@@ -43,9 +42,11 @@ void AudioClass::setLvl(double lvl)
 void AudioClass::initializeInputSource(int n)
 {
     QAudioFormat audio_format;
+    static QAudioInput *m_audio_input = NULL;
 
-    if(n)
+    if(n) // strange offset here
         n--;
+
     qDebug() << n;
     qDebug() << "The custom input audio device is:" << m_input_source_device_list[n].deviceName();
 
@@ -63,7 +64,6 @@ void AudioClass::initializeInputSource(int n)
         qDebug() << "OOOPS the format is wrong! Using nearest congiguration...";
     }
 
-
     if (m_audio_input != NULL)
     {
         m_audio_input->stop();
@@ -75,8 +75,8 @@ void AudioClass::initializeInputSource(int n)
     m_audio_input->setVolume(1);
     m_audio_input->setNotifyInterval(70);
 
-    mInputBuffer.open(QBuffer::ReadWrite);
-    m_audio_input->start(&mInputBuffer);
+    m_input_buffer.open(QBuffer::ReadWrite); // it will open every time is input source changed, fix this
+    m_audio_input->start(&m_input_buffer);
 
     connect(m_audio_input, SIGNAL(notify()), SLOT(readMore()));
 }
@@ -87,16 +87,15 @@ void AudioClass::setInputCurrentSourceIdx(int n)
     {
         m_current_input_source_idx = n;
         initializeInputSource(n);
-        //emit m_current_input_source_idxChanged;
-
     }
-    qDebug() << "setInputSource called:" << n;
 }
 
 void AudioClass::readMore()
 {
-    mInputBuffer.seek(0);
-    QByteArray ba = mInputBuffer.readAll();
+    QVector<double> mSamples;
+
+    m_input_buffer.seek(0);
+    QByteArray ba = m_input_buffer.readAll();
    // uint32_t num_samples_sorted;
     int num_samples = ba.length() / 2;
     //qDebug() << "num samples" << num_samples;
@@ -117,8 +116,6 @@ void AudioClass::readMore()
             }
         }
     }
-    //mSamples.append(199);
-    //qDebug() << "mSamples size:" << mSamples.size();
 
     double result = 0;
     for(auto i : mSamples){
@@ -132,8 +129,8 @@ void AudioClass::readMore()
 
     mSamples.clear();
 
-    mInputBuffer.buffer().clear();
-    mInputBuffer.seek(0);
+    m_input_buffer.buffer().clear();
+    m_input_buffer.seek(0);
 }
 
 
