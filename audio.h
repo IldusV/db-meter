@@ -10,18 +10,18 @@
 class AudioClass : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(double lvl READ lvl WRITE setLvl NOTIFY lvlChanged)
+    Q_PROPERTY(double getLvl READ getLvl WRITE setLvl NOTIFY lvlChanged)
 
 public:
     explicit AudioClass(QObject *parent = nullptr);
-    double lvl();
+    double getLvl();
     Q_INVOKABLE QStringList getSourceList();
 
 signals:
     void lvlChanged();
 
 public slots:
-    void setLvl(double lvl);
+    void setLvl(double getLvl);
     void setInputCurrentSourceIdx(int);
 
 private slots:

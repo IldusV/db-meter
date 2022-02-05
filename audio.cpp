@@ -1,14 +1,11 @@
 #include "audio.h"
 #include "QtDebug"
 
-const int BufferSize = 14096;
-
 AudioClass::AudioClass(QObject *parent)
     : QObject(parent),
       m_lvl(0),
       m_input_source_name_list(0),
       m_current_input_source_idx(0)
-      //m_audio_input(NULL)
 {
     qDebug() << "constructing audio object...";
 
@@ -25,7 +22,7 @@ QStringList AudioClass::getSourceList()
     return m_input_source_name_list;
 }
 
-double AudioClass::lvl()
+double AudioClass::getLvl()
 {
     return m_lvl;
 }
@@ -109,7 +106,6 @@ void AudioClass::readMore()
             if (s != 0)
             {
                 mSamples.append((double)s / 32768.0);
-                //qDebug() << "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<";
             } else
             {
                 mSamples.append(0);

@@ -34,7 +34,7 @@ Rectangle {
         maximumValue: 60
         minimumValue: 0
 
-        value: audioclass.lvl * (maximumValue*10)
+        value: audioclass.getLvl * (maximumValue*10)
 
         StatusIndicator
         {
